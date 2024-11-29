@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UKParliament.CodeTest.Data\UKParliament.CodeTest.Data.csproj" />
-    <ProjectReference Include="..\UKParliament.CodeTest.Repository\UKParliament.CodeTest.Repository.csproj" />
   </ItemGroup>
 
 </Project>
