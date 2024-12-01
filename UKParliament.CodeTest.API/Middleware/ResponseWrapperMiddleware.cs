@@ -1,8 +1,10 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using UKParliament.CodeTest.API.Helper;
 
 namespace UKParliament.CodeTest.API.Middleware;
 //TODO: this result wraper is not fully completed 
+//if the contentType is not JSON, we have to wrap the result in the controller for now
 public class ResponseWrapperMiddleware
 {
     private readonly RequestDelegate _next;
@@ -29,7 +31,7 @@ public class ResponseWrapperMiddleware
             newBodyStream.Seek(0, SeekOrigin.Begin);
             context.Response.Body = originalBodyStream;
 
-            if (IsAlreadyWrapped(bodyText) || !IsJsonResponse(context))
+            if (IsAlreadyWrapped(bodyText))
             {
                 await newBodyStream.CopyToAsync(originalBodyStream);
                 return;
@@ -44,25 +46,17 @@ public class ResponseWrapperMiddleware
 
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedNotFoundResponse));
-                return;
             }
-
-            var wrappedResponse = new Result<object>(null, GetDefaultMessageForStatusCode(context.Response.StatusCode),
-                context.Response.StatusCode);
-
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedResponse));
+            else
+            {
+                await WrapErrorResponse(context);
+            }
         }
         catch (Exception ex)
         {
             //TODO: proper error handling
-
-            var wrappedNotFoundResponse = new Result<object>(null, GetDefaultMessageForStatusCode(StatusCodes.Status500InternalServerError)
-                , StatusCodes.Status500InternalServerError);
-            context.Response.ContentType = "application/json";
-            await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedNotFoundResponse));
-            return;
-
+            await WrapErrorResponse(context, StatusCodes.Status500InternalServerError);
+            await ResetAndCopyModifiedStreamToOriginal(newBodyStream, originalBodyStream);
         }
         finally
         {
@@ -71,6 +65,22 @@ public class ResponseWrapperMiddleware
             await newBodyStream.FlushAsync();
             newBodyStream.Close();
         }
+    }
+
+    private async Task ResetAndCopyModifiedStreamToOriginal(MemoryStream memoryStream, Stream originalBody)
+    {
+        memoryStream.Seek(0, SeekOrigin.Begin);
+        // Reset the position and copy the modified response back to the original stream
+        await memoryStream.CopyToAsync(originalBody);
+    }
+
+    private async Task WrapErrorResponse(HttpContext context, int? statusCode = null)
+    {
+        int currentStatusCode = statusCode ?? context.Response.StatusCode;
+        var wrappedResponse = new Result<object>(null, GetDefaultMessageForStatusCode(currentStatusCode), currentStatusCode);
+
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedResponse));
     }
 
     private static bool IsAlreadyWrapped(string bodyText)

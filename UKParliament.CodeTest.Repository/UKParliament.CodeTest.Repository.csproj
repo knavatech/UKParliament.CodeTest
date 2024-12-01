@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UKParliament.CodeTest.Data\UKParliament.CodeTest.Data.csproj" />
+    <ProjectReference Include="..\UKParliament.CodeTest.DTO\UKParliament.CodeTest.DTO.csproj" />
   </ItemGroup>
 
 </Project>

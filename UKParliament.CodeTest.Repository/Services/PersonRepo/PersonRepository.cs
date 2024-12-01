@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UKParliament.CodeTest.Data;
+using UKParliament.CodeTest.DTO.Person;
 
 namespace UKParliament.CodeTest.Repository.Services.PersonRepo;
 
@@ -12,21 +13,43 @@ public class PersonRepository : IPersonRepository
         _context = context;
     }
 
-    //TODO: need to add some filter or paging
-    public async Task<IEnumerable<Person>> GetAllAsync()
+    //TODO: need to add some filter or paging    
+    public async Task<IEnumerable<PersonDTO>> GetAllAsync()
     {
-        return  await _context.People.ToListAsync();
+        //Returning DTO directly due to avoid eager loading and circular dependencies
+        return await _context.People.Include(d => d.Department).AsNoTrackingWithIdentityResolution()
+                                            .Select(p => MapPersonToDTO(p)).ToListAsync();
     }
 
-    public async Task<Person?> GetByIdAsync(Guid id)
+    public async Task<PersonDTO?> GetByIdAsync(Guid guid)
     {
-        return await _context.People.FirstOrDefaultAsync(p => p.PersonId == id);
+        var person = await _context.People.Include(d => d.Department).AsNoTrackingWithIdentityResolution()
+                                            .FirstOrDefaultAsync(p => p.PersonId.Equals(guid));
+        if (person == null)
+        {
+            return null;
+        }
+
+        return MapPersonToDTO(person);
     }
 
-    public async Task<Department?> GetDepartmentAsync(Guid id)
+    private PersonDTO MapPersonToDTO(Person person)
     {
-        return await _context.People.Include(d=>d.Department).Where(p => p.PersonId == id)
-            .Select(d=>d.Department).SingleOrDefaultAsync();
+        return new PersonDTO()
+        {
+            PersonId = person.PersonId,
+            FirstName = person.FirstName,
+            LastName = person.LastName,
+            DateOfBirth = person.DateOfBirth,
+            DepartmentId = person.DepartmentId,
+            DepartmentName = person.Department.Name
+        };
+    }
+
+    public async Task<Department?> GetDepartmentAsync(Guid guid)
+    {
+        return await _context.People.Include(d => d.Department).Where(p => p.PersonId.Equals(guid))
+            .Select(d => d.Department).SingleOrDefaultAsync();
     }
 
     public async Task AddAsync(Person person)
@@ -41,9 +64,9 @@ public class PersonRepository : IPersonRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid guid)
     {
-        var person = await _context.People.FindAsync(id);
+        var person = await _context.People.FindAsync(guid);
         if (person != null)
         {
             _context.People.Remove(person);

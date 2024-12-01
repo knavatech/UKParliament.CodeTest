@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UKParliament.CodeTest.Data;
+using UKParliament.CodeTest.API.Helper;
+using UKParliament.CodeTest.DTO.Person;
 using UKParliament.CodeTest.Services.AppServices;
 
 namespace UKParliament.CodeTest.API.Controllers;
@@ -22,32 +23,32 @@ public class PersonController : ControllerBase
         return Ok(persons);
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
+    [HttpGet("{guid}")]
+    public async Task<IActionResult> GetById(Guid guid)
     {
-        var person = await _personService.GetByIdAsync(id);
+        var person = await _personService.GetByIdAsync(guid);
         return person == null ? NotFound() : Ok(person);
     }
 
-    [HttpGet("{id}/department")]
-    public async Task<IActionResult> GetPersonDepartment(Guid id)
+    [HttpGet("{guid}/department")]
+    public async Task<IActionResult> GetPersonDepartment(Guid guid)
     {
-        var department = await _personService.GetDepartmentAsync(id);
+        var department = await _personService.GetDepartmentAsync(guid);
         return department == null ? NotFound() : Ok(department);
     }
 
 
-        [HttpPost]
-    public async Task<IActionResult> Add(Person person)
+    [HttpPost]
+    public async Task<IActionResult> Add(PersonDTO person)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         await _personService.AddAsync(person);
-        return CreatedAtAction(nameof(GetById), new { id = person.PersonId }, person);
+        return CreatedAtAction(nameof(GetById), new { guid = person.PersonId }, person);
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(Person person)
+    public async Task<IActionResult> Update(PersonDTO person)
     {
         if (person.PersonId == Guid.Empty) return BadRequest();
         if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -56,10 +57,10 @@ public class PersonController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete("{guid}")]
+    public async Task<IActionResult> Delete(Guid guid)
     {
-        await _personService.DeleteAsync(id);
+        await _personService.DeleteAsync(guid);
         return NoContent();
     }
 }

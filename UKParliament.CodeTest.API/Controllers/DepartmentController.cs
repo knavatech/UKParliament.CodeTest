@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Services.AppServices;
 
 namespace UKParliament.CodeTest.API.Controllers;

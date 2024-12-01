@@ -11,6 +11,7 @@ public static class ServiceConfiguration
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
         services.AddDbContext<PersonManagerContext>(options => options.UseInMemoryDatabase("PersonManagerDb"));
+        services.AddAutoMapper(typeof(Program));
 
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IPersonRepository, PersonRepository>();

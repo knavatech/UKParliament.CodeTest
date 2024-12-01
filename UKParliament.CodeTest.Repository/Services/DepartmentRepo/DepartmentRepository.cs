@@ -14,7 +14,8 @@ public class DepartmentRepository : IDepartmentRepository
 
     public async Task<IEnumerable<Department>> GetAllAsync()
     {
-        return await _context.Departments.ToListAsync();
+        throw new NotImplementedException();
+        return await _context.Departments.AsNoTrackingWithIdentityResolution().ToListAsync();
     }
 
     public async Task<Department?> GetByIdAsync(int id)
