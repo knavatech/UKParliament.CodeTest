@@ -40,7 +40,10 @@ public class PersonController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Add(PersonDTO person)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         await _personService.AddAsync(person);
         return CreatedAtAction(nameof(GetById), new { guid = person.PersonId }, person);
@@ -49,8 +52,15 @@ public class PersonController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Update(PersonDTO person)
     {
-        if (person.PersonId == Guid.Empty) return BadRequest();
-        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (person.PersonId == Guid.Empty)
+        {
+            return BadRequest();
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         await _personService.UpdateAsync(person);
         return Ok();

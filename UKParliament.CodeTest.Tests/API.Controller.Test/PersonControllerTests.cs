@@ -181,4 +181,30 @@ public class PersonControllerTests
         // Assert
         Assert.IsType<OkResult>(result);
     }
+
+    [Fact]
+    public async Task Add_ShouldReturnBadRequest_WhenModelIsInvalid()
+    {
+        // Arrange
+        var person = new PersonDTO
+        {
+            // Missing FirstName, LastName, and DateOfBirth
+            PersonId = Guid.NewGuid(),
+            DepartmentId = 1
+        };
+
+        _controller.ModelState.AddModelError("FirstName", "First name is required");
+        _controller.ModelState.AddModelError("DateOfBirth", "Date of birth is required");
+
+        // Act
+        var result = await _controller.Add(person);
+
+        // Assert
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+        Assert.Equal(400, badRequestResult.StatusCode);
+
+        var errors = Assert.IsType<SerializableError>(badRequestResult.Value);
+        Assert.Contains("FirstName", errors.Keys);
+        Assert.Contains("DateOfBirth", errors.Keys);
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UKParliament.CodeTest.API.Helper;
 using UKParliament.CodeTest.Data;
 using UKParliament.CodeTest.Repository.Services.DepartmentRepo;
 using UKParliament.CodeTest.Repository.Services.PersonRepo;
@@ -11,6 +12,11 @@ public static class ServiceConfiguration
 {
     public static IServiceCollection ConfigureServices(this IServiceCollection services)
     {
+        services.AddControllers(options =>
+        {
+            options.Filters.Add(new ValidateModelFilter());
+        });
+
         services.AddDbContext<PersonManagerContext>(options => options.UseInMemoryDatabase("PersonManagerDb"));
         services.AddAutoMapper(typeof(PersonProfile).Assembly);
 
