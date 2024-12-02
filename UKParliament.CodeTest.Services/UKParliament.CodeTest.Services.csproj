@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UKParliament.CodeTest.Data\UKParliament.CodeTest.Data.csproj" />
+    <ProjectReference Include="..\UKParliament.CodeTest.DTO\UKParliament.CodeTest.DTO.csproj" />
+    <ProjectReference Include="..\UKParliament.CodeTest.Repository\UKParliament.CodeTest.Repository.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,33 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+/* Color Palette */
+$primary-color: #4c2c92;
+$secondary-color: #f8f7f5;
+$accent-color: #ffffff;
+$hover-color: #3b2370;
+$table-header-color: #ecebeb;
 
-$colour-purple: #373151;
-
+/* Typography */
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 1rem 0;
+  font-family: 'Arial', sans-serif;
+  background-color: $secondary-color;
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
-h1, h2, h3, h4, h5 {
-  color: $colour-purple;
+h1, h2, h3 {
+  color: $primary-color;
+  margin-bottom: 16px;
 }
 
-strong.highlight {
-  color: $colour-purple;
+/* Form Styling */
+.form-container {
+  background-color: $accent-color;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
 }
 
-table {
-  thead {
-    th {
-      color: $colour-purple !important;
-      vertical-align: top;
-    }
+.form-group {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: $primary-color;
+    font-weight: bold;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
 }
 
-.table-responsive {
-    overflow-x: auto;
+/* Button Styling */
+.button {
+  background-color: $primary-color;
+  color: $accent-color;
+  padding: 5px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right:2px;
 
-    .table {
-        min-width: 600px;
-    }
+  &:hover {
+    background-color: $hover-color;
+  }
+}
+
+.align_r {
+  text-align: right; // Center horizontally
+  vertical-align: middle;
+}
+.align_c {
+  text-align: center; // Center horizontally
+  vertical-align: middle;
+}
+
+/* Table Styling */
+.table-container {
+  background-color: $accent-color;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background-color: $table-header-color;
+    color: $primary-color;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {
+    background-color: #f8f7f5;
+  }
 }

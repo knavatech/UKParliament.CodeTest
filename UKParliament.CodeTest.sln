@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKParliament.CodeTest.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKParliament.CodeTest.Data", "UKParliament.CodeTest.Data\UKParliament.CodeTest.Data.csproj", "{20AF84AD-3FE8-454C-9338-FEA520E9FF2C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UKParliament.CodeTest.API", "UKParliament.CodeTest.API\UKParliament.CodeTest.API.csproj", "{A43EC4A3-E535-449F-907E-ADC222093F0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UKParliament.CodeTest.Repository", "UKParliament.CodeTest.Repository\UKParliament.CodeTest.Repository.csproj", "{5CBEC266-76C4-4A77-B2D6-E09E784EEE7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UKParliament.CodeTest.DTO", "UKParliament.CodeTest.DTO\UKParliament.CodeTest.DTO.csproj", "{09B83390-CF3D-4371-8324-123C696822BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{20AF84AD-3FE8-454C-9338-FEA520E9FF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20AF84AD-3FE8-454C-9338-FEA520E9FF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20AF84AD-3FE8-454C-9338-FEA520E9FF2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43EC4A3-E535-449F-907E-ADC222093F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43EC4A3-E535-449F-907E-ADC222093F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43EC4A3-E535-449F-907E-ADC222093F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43EC4A3-E535-449F-907E-ADC222093F0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CBEC266-76C4-4A77-B2D6-E09E784EEE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CBEC266-76C4-4A77-B2D6-E09E784EEE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CBEC266-76C4-4A77-B2D6-E09E784EEE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CBEC266-76C4-4A77-B2D6-E09E784EEE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B83390-CF3D-4371-8324-123C696822BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B83390-CF3D-4371-8324-123C696822BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B83390-CF3D-4371-8324-123C696822BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B83390-CF3D-4371-8324-123C696822BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

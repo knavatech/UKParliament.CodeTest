@@ -1,0 +1,7 @@
+<app-add-person [person]="selectedPerson"
+                 [departments]="departments"
+                 (save)="handleSave($event)"></app-add-person>
+
+<app-person-list [persons]="persons"
+                 (edit)="handleEdit($event)"
+                 (delete)="handleDelete($event)"></app-person-list>

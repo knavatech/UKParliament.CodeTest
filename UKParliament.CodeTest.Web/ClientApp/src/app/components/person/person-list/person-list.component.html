@@ -1,0 +1,26 @@
+<div class="table-container">
+  <h2>Person List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Date of Birth</th>
+        <th>Department</th>
+        <th  class="align_c">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of persons">
+        <td>{{ person.firstName }}</td>
+        <td>{{ person.lastName }}</td>
+        <td>{{ person.dateOfBirth | date: 'longDate' }}</td>
+        <td>{{ person.departmentName }}</td>
+        <td class="align_r">
+          <button class="button" (click)="editPerson(person.personId)">Edit</button>
+          <button class="button" (click)="deletePerson(person.personId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
