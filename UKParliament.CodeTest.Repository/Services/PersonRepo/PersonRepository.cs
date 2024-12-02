@@ -33,7 +33,7 @@ public class PersonRepository : IPersonRepository
         return MapPersonToDTO(person);
     }
 
-    private PersonDTO MapPersonToDTO(Person person)
+    private static PersonDTO MapPersonToDTO(Person person)
     {
         return new PersonDTO()
         {

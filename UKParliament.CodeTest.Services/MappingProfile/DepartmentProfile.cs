@@ -8,6 +8,6 @@ public class DepartmentProfile : Profile
 {
     public DepartmentProfile()
     {
-        CreateMap<Department, DepartmentDTO>().ReverseMap();
+        CreateMap<Department, DepartmentDTO>().ReverseMap().ForMember(dest => dest.People, opt => opt.Ignore());
     }
 }

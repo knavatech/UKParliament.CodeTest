@@ -28,7 +28,6 @@ public class ResponseWrapperMiddleware
             newBodyStream.Seek(0, SeekOrigin.Begin);
             var bodyText = await new StreamReader(newBodyStream).ReadToEndAsync();
 
-            newBodyStream.Seek(0, SeekOrigin.Begin);
             context.Response.Body = originalBodyStream;
 
             if (IsAlreadyWrapped(bodyText))
@@ -39,23 +38,18 @@ public class ResponseWrapperMiddleware
 
             if (context.Response.StatusCode >= 200 && context.Response.StatusCode < 300)
             {
-                var wrappedNotFoundResponse = new Result<object>(
-                    string.IsNullOrEmpty(bodyText) ? null : JsonSerializer.Deserialize<object>(bodyText),
-                    GetDefaultMessageForStatusCode(context.Response.StatusCode)
-                    , context.Response.StatusCode);
-
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedNotFoundResponse));
+                await WrapResponse(context , context.Response.StatusCode
+                                , string.IsNullOrWhiteSpace(bodyText) ? null : JsonSerializer.Deserialize<object>(bodyText));
             }
             else
             {
-                await WrapErrorResponse(context);
+                await WrapResponse(context);
             }
         }
         catch (Exception ex)
         {
             //TODO: proper error handling
-            await WrapErrorResponse(context, StatusCodes.Status500InternalServerError);
+            await WrapResponse(context, StatusCodes.Status500InternalServerError);
             await ResetAndCopyModifiedStreamToOriginal(newBodyStream, originalBodyStream);
         }
         finally
@@ -74,10 +68,10 @@ public class ResponseWrapperMiddleware
         await memoryStream.CopyToAsync(originalBody);
     }
 
-    private async Task WrapErrorResponse(HttpContext context, int? statusCode = null)
+    private async Task WrapResponse(HttpContext context, int? statusCode = null, object? data = null)
     {
         int currentStatusCode = statusCode ?? context.Response.StatusCode;
-        var wrappedResponse = new Result<object>(null, GetDefaultMessageForStatusCode(currentStatusCode), currentStatusCode);
+        var wrappedResponse = new Result<object>(data, GetDefaultMessageForStatusCode(currentStatusCode), currentStatusCode);
 
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(JsonSerializer.Serialize(wrappedResponse));

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UKParliament.CodeTest.API.Helper;
 using UKParliament.CodeTest.DTO.Person;
 using UKParliament.CodeTest.Services.AppServices;
 
@@ -54,13 +53,13 @@ public class PersonController : ControllerBase
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         await _personService.UpdateAsync(person);
-        return NoContent();
+        return Ok();
     }
 
     [HttpDelete("{guid}")]
     public async Task<IActionResult> Delete(Guid guid)
     {
         await _personService.DeleteAsync(guid);
-        return NoContent();
+        return Ok();
     }
 }

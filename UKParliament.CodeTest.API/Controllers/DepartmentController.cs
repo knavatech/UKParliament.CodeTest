@@ -26,7 +26,5 @@ public class DepartmentController : ControllerBase
     {
         var person = await _departmentService.GetByIdAsync(id);
         return person == null ? NotFound() : Ok(person);
-    }
-
-    
+    }    
 }
