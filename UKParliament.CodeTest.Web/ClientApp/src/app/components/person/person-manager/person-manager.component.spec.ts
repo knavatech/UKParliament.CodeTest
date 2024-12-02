@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PersonEditorComponent } from './person-editor.component';
+import { PersonEditorComponent } from './person-manager.component';
 
 describe('PersonEditorComponent', () => {
   let component: PersonEditorComponent;

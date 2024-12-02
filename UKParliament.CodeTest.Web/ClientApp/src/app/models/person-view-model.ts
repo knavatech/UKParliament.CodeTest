@@ -2,7 +2,7 @@ export interface PersonViewModel {
   personId: string;
   firstName: string;
   lastName: string;
-  dateOfBirth: Date;
+  dateOfBirth: string;
   departmentId: number;
   departmentName: string;
 }

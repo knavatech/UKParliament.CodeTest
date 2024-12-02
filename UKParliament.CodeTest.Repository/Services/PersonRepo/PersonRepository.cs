@@ -54,6 +54,8 @@ public class PersonRepository : IPersonRepository
 
     public async Task AddAsync(Person person)
     {
+        person.PersonId = Guid.NewGuid();
+
         await _context.People.AddAsync(person);
         await _context.SaveChangesAsync();
     }
